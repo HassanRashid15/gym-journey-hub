@@ -1,88 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Clock, Flame, Users, Calendar } from "lucide-react";
-import classHiit from "@/assets/class-hiit.jpg";
-import classYoga from "@/assets/class-yoga.jpg";
-import classSpin from "@/assets/class-spin.jpg";
-
-const categories = ["All", "Cardio", "Strength", "Mind & Body", "HIIT"];
-
-const allClasses = [
-  {
-    id: 1,
-    name: "Power HIIT",
-    category: "HIIT",
-    image: classHiit,
-    duration: "45 min",
-    intensity: "High",
-    trainer: "Marcus Johnson",
-    schedule: ["Mon 6:00 AM", "Wed 6:00 AM", "Fri 6:00 AM"],
-    description: "High-intensity interval training to maximize calorie burn and boost metabolism.",
-    spots: 8,
-  },
-  {
-    id: 2,
-    name: "Power Yoga",
-    category: "Mind & Body",
-    image: classYoga,
-    duration: "60 min",
-    intensity: "Medium",
-    trainer: "Lisa Chen",
-    schedule: ["Tue 7:00 AM", "Thu 7:00 AM", "Sat 9:00 AM"],
-    description: "A vigorous, fitness-based approach to vinyasa-style yoga.",
-    spots: 12,
-  },
-  {
-    id: 3,
-    name: "Spin Revolution",
-    category: "Cardio",
-    image: classSpin,
-    duration: "50 min",
-    intensity: "High",
-    trainer: "James Wilson",
-    schedule: ["Mon 5:30 PM", "Wed 5:30 PM", "Sat 10:00 AM"],
-    description: "Indoor cycling class with music-driven workouts and immersive lighting.",
-    spots: 5,
-  },
-  {
-    id: 4,
-    name: "Strength & Sculpt",
-    category: "Strength",
-    image: classHiit,
-    duration: "55 min",
-    intensity: "High",
-    trainer: "Sarah Miller",
-    schedule: ["Tue 6:00 PM", "Thu 6:00 PM"],
-    description: "Build lean muscle and increase strength with this total-body workout.",
-    spots: 10,
-  },
-  {
-    id: 5,
-    name: "Meditation Flow",
-    category: "Mind & Body",
-    image: classYoga,
-    duration: "30 min",
-    intensity: "Low",
-    trainer: "Lisa Chen",
-    schedule: ["Daily 7:00 AM"],
-    description: "Start your day with guided meditation and gentle stretching.",
-    spots: 20,
-  },
-  {
-    id: 6,
-    name: "Cardio Blast",
-    category: "Cardio",
-    image: classSpin,
-    duration: "45 min",
-    intensity: "High",
-    trainer: "Marcus Johnson",
-    schedule: ["Mon 12:00 PM", "Wed 12:00 PM", "Fri 12:00 PM"],
-    description: "Fast-paced cardio workout combining dance moves and aerobic exercises.",
-    spots: 15,
-  },
-];
+import { allClasses, categories } from "@/data/classes";
 
 const scheduleData = [
   { time: "6:00 AM", mon: "Power HIIT", tue: "Yoga Flow", wed: "Power HIIT", thu: "Yoga Flow", fri: "Power HIIT", sat: "Boot Camp" },
@@ -207,7 +129,9 @@ const Classes = () => {
                       Instructor: <span className="text-foreground">{classItem.trainer}</span>
                     </p>
 
-                    <Button className="w-full">Book Class</Button>
+                    <Button className="w-full" asChild>
+                      <Link to={`/classes/${classItem.id}`}>Book Class</Link>
+                    </Button>
                   </div>
                 </div>
               ))}

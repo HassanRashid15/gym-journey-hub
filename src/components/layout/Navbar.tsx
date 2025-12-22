@@ -6,6 +6,7 @@ import { Menu, X, Dumbbell } from "lucide-react";
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "Classes", path: "/classes" },
+  { name: "Equipment", path: "/equipment" },
   { name: "Membership", path: "/membership" },
   { name: "Trainers", path: "/trainers" },
   { name: "About", path: "/about" },
@@ -27,7 +28,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -42,7 +43,7 @@ const Navbar = () => {
           </div>
 
           {/* CTA Button */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <Button variant="default" size="lg" asChild>
               <Link to="/membership">Join Now</Link>
             </Button>
@@ -50,7 +51,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2"
+            className="lg:hidden p-2"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -60,7 +61,7 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4 border-t border-border animate-fade-in">
+          <div className="lg:hidden py-4 border-t border-border animate-fade-in">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <Link
