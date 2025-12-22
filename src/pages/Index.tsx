@@ -1,12 +1,284 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import { ArrowRight, Zap, Users, Clock, Trophy, Star, ChevronRight } from "lucide-react";
+import heroImage from "@/assets/hero-gym.jpg";
+import classHiit from "@/assets/class-hiit.jpg";
+import classYoga from "@/assets/class-yoga.jpg";
+import classSpin from "@/assets/class-spin.jpg";
+
+const features = [
+  {
+    icon: Zap,
+    title: "High-Tech Equipment",
+    description: "State-of-the-art machines and free weights for every fitness level.",
+  },
+  {
+    icon: Users,
+    title: "Expert Trainers",
+    description: "Certified professionals dedicated to helping you reach your goals.",
+  },
+  {
+    icon: Clock,
+    title: "24/7 Access",
+    description: "Train on your schedule with round-the-clock gym access.",
+  },
+  {
+    icon: Trophy,
+    title: "Results Driven",
+    description: "Proven programs designed to deliver real, lasting results.",
+  },
+];
+
+const classes = [
+  {
+    name: "HIIT Training",
+    image: classHiit,
+    duration: "45 min",
+    intensity: "High",
+  },
+  {
+    name: "Power Yoga",
+    image: classYoga,
+    duration: "60 min",
+    intensity: "Medium",
+  },
+  {
+    name: "Spin Class",
+    image: classSpin,
+    duration: "50 min",
+    intensity: "High",
+  },
+];
+
+const testimonials = [
+  {
+    name: "Sarah Mitchell",
+    role: "Member since 2022",
+    content: "Forge completely transformed my fitness journey. The trainers are incredible and the community is so supportive.",
+    rating: 5,
+  },
+  {
+    name: "David Chen",
+    role: "Member since 2021",
+    content: "Best gym I've ever been to. The equipment is top-notch and the classes are challenging but fun.",
+    rating: 5,
+  },
+  {
+    name: "Emily Rodriguez",
+    role: "Member since 2023",
+    content: "I've lost 30 pounds and gained so much confidence. Forge isn't just a gym, it's a lifestyle.",
+    rating: 5,
+  },
+];
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={heroImage}
+            alt="Gym interior with dramatic lighting"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10 pt-20">
+          <div className="max-w-2xl">
+            <h1 className="font-display text-6xl md:text-8xl leading-none mb-6 animate-slide-up">
+              FORGE YOUR
+              <span className="text-gradient block">FUTURE</span>
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 animate-slide-up" style={{ animationDelay: "0.1s" }}>
+              Transform your body and mind with our world-class facilities, expert trainers, and a community that pushes you beyond your limits.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 animate-slide-up" style={{ animationDelay: "0.2s" }}>
+              <Button variant="hero" asChild>
+                <Link to="/membership">
+                  Start Your Journey
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </Button>
+              <Button variant="heroOutline" asChild>
+                <Link to="/classes">
+                  Explore Classes
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
+          <div className="w-6 h-10 border-2 border-muted-foreground rounded-full flex justify-center">
+            <div className="w-1.5 h-3 bg-primary rounded-full mt-2 animate-pulse" />
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-24 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-5xl md:text-6xl mb-4">WHY CHOOSE FORGE</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              We provide everything you need to achieve your fitness goals in one place.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <div
+                key={feature.title}
+                className="glass-card rounded-xl p-8 hover-lift"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
+                  <feature.icon className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="font-display text-2xl mb-3">{feature.title}</h3>
+                <p className="text-muted-foreground text-sm">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Classes Preview */}
+      <section className="py-24">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+            <div>
+              <h2 className="font-display text-5xl md:text-6xl mb-4">POPULAR CLASSES</h2>
+              <p className="text-muted-foreground text-lg max-w-xl">
+                Join our high-energy classes led by expert instructors.
+              </p>
+            </div>
+            <Button variant="outline" asChild className="mt-4 md:mt-0">
+              <Link to="/classes">
+                View All Classes
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {classes.map((classItem, index) => (
+              <div
+                key={classItem.name}
+                className="group relative rounded-xl overflow-hidden aspect-[4/5] hover-lift"
+              >
+                <img
+                  src={classItem.image}
+                  alt={classItem.name}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <div className="flex gap-2 mb-3">
+                    <span className="px-3 py-1 bg-primary/20 text-primary text-xs font-semibold rounded-full">
+                      {classItem.duration}
+                    </span>
+                    <span className="px-3 py-1 bg-secondary text-secondary-foreground text-xs font-semibold rounded-full">
+                      {classItem.intensity}
+                    </span>
+                  </div>
+                  <h3 className="font-display text-3xl">{classItem.name}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-24 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="font-display text-5xl md:text-7xl text-primary mb-2">10K+</div>
+              <p className="text-muted-foreground">Active Members</p>
+            </div>
+            <div className="text-center">
+              <div className="font-display text-5xl md:text-7xl text-primary mb-2">50+</div>
+              <p className="text-muted-foreground">Expert Trainers</p>
+            </div>
+            <div className="text-center">
+              <div className="font-display text-5xl md:text-7xl text-primary mb-2">100+</div>
+              <p className="text-muted-foreground">Weekly Classes</p>
+            </div>
+            <div className="text-center">
+              <div className="font-display text-5xl md:text-7xl text-primary mb-2">15</div>
+              <p className="text-muted-foreground">Years of Excellence</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-24">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-5xl md:text-6xl mb-4">MEMBER STORIES</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Real results from real people who chose to transform their lives at Forge.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={testimonial.name}
+                className="glass-card rounded-xl p-8 hover-lift"
+              >
+                <div className="flex gap-1 mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-primary fill-primary" />
+                  ))}
+                </div>
+                <p className="text-foreground mb-6 italic">"{testimonial.content}"</p>
+                <div>
+                  <p className="font-semibold">{testimonial.name}</p>
+                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 bg-card relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary rounded-full blur-3xl" />
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="font-display text-5xl md:text-7xl mb-6">
+              READY TO <span className="text-gradient">TRANSFORM</span>?
+            </h2>
+            <p className="text-muted-foreground text-lg mb-8">
+              Join thousands of members who have already started their fitness journey. Your first week is on us.
+            </p>
+            <Button variant="hero" size="xl" asChild>
+              <Link to="/membership">
+                Get Started Free
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
 };

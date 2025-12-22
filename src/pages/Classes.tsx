@@ -1,0 +1,260 @@
+import { useState } from "react";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import { Button } from "@/components/ui/button";
+import { Clock, Flame, Users, Calendar } from "lucide-react";
+import classHiit from "@/assets/class-hiit.jpg";
+import classYoga from "@/assets/class-yoga.jpg";
+import classSpin from "@/assets/class-spin.jpg";
+
+const categories = ["All", "Cardio", "Strength", "Mind & Body", "HIIT"];
+
+const allClasses = [
+  {
+    id: 1,
+    name: "Power HIIT",
+    category: "HIIT",
+    image: classHiit,
+    duration: "45 min",
+    intensity: "High",
+    trainer: "Marcus Johnson",
+    schedule: ["Mon 6:00 AM", "Wed 6:00 AM", "Fri 6:00 AM"],
+    description: "High-intensity interval training to maximize calorie burn and boost metabolism.",
+    spots: 8,
+  },
+  {
+    id: 2,
+    name: "Power Yoga",
+    category: "Mind & Body",
+    image: classYoga,
+    duration: "60 min",
+    intensity: "Medium",
+    trainer: "Lisa Chen",
+    schedule: ["Tue 7:00 AM", "Thu 7:00 AM", "Sat 9:00 AM"],
+    description: "A vigorous, fitness-based approach to vinyasa-style yoga.",
+    spots: 12,
+  },
+  {
+    id: 3,
+    name: "Spin Revolution",
+    category: "Cardio",
+    image: classSpin,
+    duration: "50 min",
+    intensity: "High",
+    trainer: "James Wilson",
+    schedule: ["Mon 5:30 PM", "Wed 5:30 PM", "Sat 10:00 AM"],
+    description: "Indoor cycling class with music-driven workouts and immersive lighting.",
+    spots: 5,
+  },
+  {
+    id: 4,
+    name: "Strength & Sculpt",
+    category: "Strength",
+    image: classHiit,
+    duration: "55 min",
+    intensity: "High",
+    trainer: "Sarah Miller",
+    schedule: ["Tue 6:00 PM", "Thu 6:00 PM"],
+    description: "Build lean muscle and increase strength with this total-body workout.",
+    spots: 10,
+  },
+  {
+    id: 5,
+    name: "Meditation Flow",
+    category: "Mind & Body",
+    image: classYoga,
+    duration: "30 min",
+    intensity: "Low",
+    trainer: "Lisa Chen",
+    schedule: ["Daily 7:00 AM"],
+    description: "Start your day with guided meditation and gentle stretching.",
+    spots: 20,
+  },
+  {
+    id: 6,
+    name: "Cardio Blast",
+    category: "Cardio",
+    image: classSpin,
+    duration: "45 min",
+    intensity: "High",
+    trainer: "Marcus Johnson",
+    schedule: ["Mon 12:00 PM", "Wed 12:00 PM", "Fri 12:00 PM"],
+    description: "Fast-paced cardio workout combining dance moves and aerobic exercises.",
+    spots: 15,
+  },
+];
+
+const scheduleData = [
+  { time: "6:00 AM", mon: "Power HIIT", tue: "Yoga Flow", wed: "Power HIIT", thu: "Yoga Flow", fri: "Power HIIT", sat: "Boot Camp" },
+  { time: "7:00 AM", mon: "Spin Class", tue: "Power Yoga", wed: "Spin Class", thu: "Power Yoga", fri: "Spin Class", sat: "HIIT" },
+  { time: "12:00 PM", mon: "Cardio Blast", tue: "Strength", wed: "Cardio Blast", thu: "Strength", fri: "Cardio Blast", sat: "-" },
+  { time: "5:30 PM", mon: "Spin Revolution", tue: "-", wed: "Spin Revolution", thu: "-", fri: "-", sat: "Spin Revolution" },
+  { time: "6:00 PM", mon: "Yoga", tue: "Sculpt", wed: "Yoga", thu: "Sculpt", fri: "Yoga", sat: "-" },
+];
+
+const Classes = () => {
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [view, setView] = useState<"classes" | "schedule">("classes");
+
+  const filteredClasses = activeCategory === "All"
+    ? allClasses
+    : allClasses.filter((c) => c.category === activeCategory);
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Navbar />
+
+      {/* Hero */}
+      <section className="pt-32 pb-16 bg-card">
+        <div className="container mx-auto px-4">
+          <h1 className="font-display text-6xl md:text-8xl mb-4">
+            OUR <span className="text-gradient">CLASSES</span>
+          </h1>
+          <p className="text-muted-foreground text-lg max-w-2xl">
+            From high-intensity training to mindful yoga, we offer classes for every fitness level and goal.
+          </p>
+        </div>
+      </section>
+
+      {/* View Toggle & Filters */}
+      <section className="py-8 border-b border-border sticky top-20 bg-background/80 backdrop-blur-lg z-40">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div className="flex gap-2">
+              <Button
+                variant={view === "classes" ? "default" : "secondary"}
+                onClick={() => setView("classes")}
+              >
+                Classes
+              </Button>
+              <Button
+                variant={view === "schedule" ? "default" : "secondary"}
+                onClick={() => setView("schedule")}
+              >
+                <Calendar className="w-4 h-4 mr-2" />
+                Schedule
+              </Button>
+            </div>
+            
+            {view === "classes" && (
+              <div className="flex flex-wrap gap-2">
+                {categories.map((category) => (
+                  <Button
+                    key={category}
+                    variant={activeCategory === category ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setActiveCategory(category)}
+                  >
+                    {category}
+                  </Button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Classes Grid */}
+      {view === "classes" && (
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredClasses.map((classItem) => (
+                <div
+                  key={classItem.id}
+                  className="glass-card rounded-xl overflow-hidden hover-lift group"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={classItem.image}
+                      alt={classItem.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute top-4 left-4 flex gap-2">
+                      <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-bold rounded-full">
+                        {classItem.category}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="font-display text-2xl mb-2">{classItem.name}</h3>
+                    <p className="text-muted-foreground text-sm mb-4">{classItem.description}</p>
+                    
+                    <div className="flex flex-wrap gap-4 text-sm mb-4">
+                      <div className="flex items-center gap-1 text-muted-foreground">
+                        <Clock className="w-4 h-4 text-primary" />
+                        {classItem.duration}
+                      </div>
+                      <div className="flex items-center gap-1 text-muted-foreground">
+                        <Flame className="w-4 h-4 text-primary" />
+                        {classItem.intensity}
+                      </div>
+                      <div className="flex items-center gap-1 text-muted-foreground">
+                        <Users className="w-4 h-4 text-primary" />
+                        {classItem.spots} spots left
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {classItem.schedule.slice(0, 3).map((time, i) => (
+                        <span key={i} className="px-2 py-1 bg-secondary text-xs rounded">
+                          {time}
+                        </span>
+                      ))}
+                    </div>
+
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Instructor: <span className="text-foreground">{classItem.trainer}</span>
+                    </p>
+
+                    <Button className="w-full">Book Class</Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Schedule View */}
+      {view === "schedule" && (
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[800px]">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-4 px-4 font-display text-lg">Time</th>
+                    <th className="text-left py-4 px-4 font-display text-lg">Monday</th>
+                    <th className="text-left py-4 px-4 font-display text-lg">Tuesday</th>
+                    <th className="text-left py-4 px-4 font-display text-lg">Wednesday</th>
+                    <th className="text-left py-4 px-4 font-display text-lg">Thursday</th>
+                    <th className="text-left py-4 px-4 font-display text-lg">Friday</th>
+                    <th className="text-left py-4 px-4 font-display text-lg">Saturday</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {scheduleData.map((row, index) => (
+                    <tr key={index} className="border-b border-border hover:bg-secondary/20 transition-colors">
+                      <td className="py-4 px-4 font-semibold text-primary">{row.time}</td>
+                      <td className="py-4 px-4 text-sm">{row.mon}</td>
+                      <td className="py-4 px-4 text-sm">{row.tue}</td>
+                      <td className="py-4 px-4 text-sm">{row.wed}</td>
+                      <td className="py-4 px-4 text-sm">{row.thu}</td>
+                      <td className="py-4 px-4 text-sm">{row.fri}</td>
+                      <td className="py-4 px-4 text-sm">{row.sat}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Classes;

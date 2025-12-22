@@ -1,0 +1,168 @@
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import { Button } from "@/components/ui/button";
+import { Instagram, Mail, Award } from "lucide-react";
+import trainer1 from "@/assets/trainer-1.jpg";
+import trainer2 from "@/assets/trainer-2.jpg";
+import trainer3 from "@/assets/trainer-3.jpg";
+import trainer4 from "@/assets/trainer-4.jpg";
+
+const trainers = [
+  {
+    id: 1,
+    name: "Marcus Johnson",
+    role: "Head Trainer & HIIT Specialist",
+    image: trainer1,
+    bio: "With 12 years of experience, Marcus specializes in high-intensity training and functional fitness. He's helped hundreds of clients achieve their body transformation goals.",
+    certifications: ["NASM-CPT", "CrossFit Level 2", "TRX Certified"],
+    specialties: ["HIIT", "Weight Loss", "Strength Training"],
+    instagram: "#",
+    email: "marcus@forgegym.com",
+  },
+  {
+    id: 2,
+    name: "Sarah Miller",
+    role: "Strength & Conditioning Coach",
+    image: trainer2,
+    bio: "Sarah is a former competitive powerlifter who now dedicates her expertise to helping clients build strength safely and effectively.",
+    certifications: ["CSCS", "USAW Level 1", "Precision Nutrition L1"],
+    specialties: ["Powerlifting", "Olympic Lifting", "Muscle Building"],
+    instagram: "#",
+    email: "sarah@forgegym.com",
+  },
+  {
+    id: 3,
+    name: "James Wilson",
+    role: "Cardio & Endurance Specialist",
+    image: trainer3,
+    bio: "A former marathon runner, James brings his passion for endurance sports to our spin and cardio classes. He makes cardio fun and challenging.",
+    certifications: ["ACE-CPT", "Spinning Certified", "First Aid/CPR"],
+    specialties: ["Spin Classes", "Running Programs", "Cardio Training"],
+    instagram: "#",
+    email: "james@forgegym.com",
+  },
+  {
+    id: 4,
+    name: "Lisa Chen",
+    role: "Yoga & Mindfulness Instructor",
+    image: trainer4,
+    bio: "Lisa trained in India and brings an authentic approach to yoga and meditation. She specializes in helping clients find balance between physical and mental wellness.",
+    certifications: ["RYT-500", "Meditation Teacher", "Breathwork Certified"],
+    specialties: ["Vinyasa Yoga", "Meditation", "Stress Reduction"],
+    instagram: "#",
+    email: "lisa@forgegym.com",
+  },
+];
+
+const Trainers = () => {
+  return (
+    <div className="min-h-screen bg-background">
+      <Navbar />
+
+      {/* Hero */}
+      <section className="pt-32 pb-16 bg-card">
+        <div className="container mx-auto px-4">
+          <h1 className="font-display text-6xl md:text-8xl mb-4">
+            MEET OUR <span className="text-gradient">TRAINERS</span>
+          </h1>
+          <p className="text-muted-foreground text-lg max-w-2xl">
+            Our certified professionals are dedicated to helping you reach your fitness goals with personalized guidance and support.
+          </p>
+        </div>
+      </section>
+
+      {/* Trainers Grid */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {trainers.map((trainer, index) => (
+              <div
+                key={trainer.id}
+                className="glass-card rounded-2xl overflow-hidden hover-lift group"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2">
+                  {/* Image */}
+                  <div className="relative h-64 lg:h-auto overflow-hidden">
+                    <img
+                      src={trainer.image}
+                      alt={trainer.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent lg:hidden" />
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-8">
+                    <h3 className="font-display text-3xl mb-1">{trainer.name}</h3>
+                    <p className="text-primary font-medium mb-4">{trainer.role}</p>
+                    <p className="text-muted-foreground text-sm mb-6">{trainer.bio}</p>
+
+                    {/* Certifications */}
+                    <div className="mb-6">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Award className="w-4 h-4 text-primary" />
+                        <span className="text-sm font-semibold">Certifications</span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {trainer.certifications.map((cert) => (
+                          <span key={cert} className="px-2 py-1 bg-secondary text-xs rounded">
+                            {cert}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Specialties */}
+                    <div className="mb-6">
+                      <span className="text-sm font-semibold block mb-2">Specialties</span>
+                      <div className="flex flex-wrap gap-2">
+                        {trainer.specialties.map((specialty) => (
+                          <span key={specialty} className="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full">
+                            {specialty}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Social Links */}
+                    <div className="flex gap-4">
+                      <a
+                        href={trainer.instagram}
+                        className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                      >
+                        <Instagram className="w-5 h-5" />
+                      </a>
+                      <a
+                        href={`mailto:${trainer.email}`}
+                        className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                      >
+                        <Mail className="w-5 h-5" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 bg-card">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="font-display text-5xl md:text-6xl mb-6">
+            TRAIN WITH THE <span className="text-gradient">BEST</span>
+          </h2>
+          <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
+            Book a free consultation with one of our trainers and start your personalized fitness journey.
+          </p>
+          <Button variant="hero">Book Free Consultation</Button>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Trainers;
