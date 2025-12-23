@@ -4,6 +4,8 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Check, X, Sparkles } from "lucide-react";
+import BMICalculator from "@/components/fitness/BMICalculator";
+import FitnessAssessment from "@/components/fitness/FitnessAssessment";
 
 const plans = [
   {
@@ -186,8 +188,26 @@ const Membership = () => {
         </div>
       </section>
 
-      {/* Features */}
+      {/* Fitness Tools */}
       <section className="py-24 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-5xl mb-4">
+              ASSESS YOUR <span className="text-gradient">FITNESS</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Use our free tools to understand your current fitness level and find the perfect membership plan.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <BMICalculator />
+            <FitnessAssessment />
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="font-display text-5xl mb-4">ALL MEMBERS GET</h2>
