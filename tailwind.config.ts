@@ -77,12 +77,16 @@ export default {
           to: { height: "0" },
         },
         "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(175 100% 50% / 0.3)" },
-          "50%": { boxShadow: "0 0 40px hsl(175 100% 50% / 0.5)" },
+          "0%, 100%": { boxShadow: "0 0 20px hsl(24 100% 55% / 0.3)" },
+          "50%": { boxShadow: "0 0 40px hsl(24 100% 55% / 0.5)" },
         },
         float: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
+        },
+        "fire-flicker": {
+          "0%, 100%": { opacity: "1", transform: "scale(1)" },
+          "50%": { opacity: "0.8", transform: "scale(1.05)" },
         },
       },
       animation: {
