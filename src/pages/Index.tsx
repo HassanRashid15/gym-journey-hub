@@ -7,6 +7,7 @@ import heroImage from "@/assets/hero-gym.jpg";
 import classHiit from "@/assets/class-hiit.jpg";
 import classYoga from "@/assets/class-yoga.jpg";
 import classSpin from "@/assets/class-spin.jpg";
+import { useEffect, useState } from "react";
 
 const features = [
   {
@@ -74,27 +75,49 @@ const testimonials = [
 ];
 
 const Index = () => {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      {/* Hero Section */}
+      {/* Hero Section with Parallax */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
+        <div 
+          className="absolute inset-0"
+          style={{ transform: `translateY(${scrollY * 0.5}px)` }}
+        >
           <img
             src={heroImage}
             alt="Gym interior with dramatic lighting"
-            className="w-full h-full object-cover"
+            className="w-full h-[120%] object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
         </div>
         
-        <div className="container mx-auto px-4 relative z-10 pt-20">
+        {/* Fire glow effects */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse" />
+          <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-accent/20 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: "1s" }} />
+        </div>
+        
+        <div 
+          className="container mx-auto px-4 relative z-10 pt-20"
+          style={{ transform: `translateY(${scrollY * 0.2}px)` }}
+        >
           <div className="max-w-2xl">
             <h1 className="font-display text-6xl md:text-8xl leading-none mb-6 animate-slide-up">
               FORGE YOUR
-              <span className="text-gradient block">FUTURE</span>
+              <span className="text-gradient block drop-shadow-[0_0_30px_hsl(24,100%,55%,0.5)]">FUTURE</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 animate-slide-up" style={{ animationDelay: "0.1s" }}>
               Transform your body and mind with our world-class facilities, expert trainers, and a community that pushes you beyond your limits.
@@ -116,8 +139,8 @@ const Index = () => {
         </div>
         
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
-          <div className="w-6 h-10 border-2 border-muted-foreground rounded-full flex justify-center">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float z-10">
+          <div className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center">
             <div className="w-1.5 h-3 bg-primary rounded-full mt-2 animate-pulse" />
           </div>
         </div>
