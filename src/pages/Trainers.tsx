@@ -2,6 +2,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Instagram, Mail, Award } from "lucide-react";
+import { ScrollAnimate } from "@/hooks/useScrollAnimation";
 import trainer1 from "@/assets/trainer-1.jpg";
 import trainer2 from "@/assets/trainer-2.jpg";
 import trainer3 from "@/assets/trainer-3.jpg";
@@ -62,12 +63,14 @@ const Trainers = () => {
       {/* Hero */}
       <section className="pt-32 pb-16 bg-card">
         <div className="container mx-auto px-4">
-          <h1 className="font-display text-6xl md:text-8xl mb-4">
-            MEET OUR <span className="text-gradient">TRAINERS</span>
-          </h1>
-          <p className="text-muted-foreground text-lg max-w-2xl">
-            Our certified professionals are dedicated to helping you reach your fitness goals with personalized guidance and support.
-          </p>
+          <ScrollAnimate animation="fade-up">
+            <h1 className="font-display text-6xl md:text-8xl mb-4">
+              MEET OUR <span className="text-gradient">TRAINERS</span>
+            </h1>
+            <p className="text-muted-foreground text-lg max-w-2xl">
+              Our certified professionals are dedicated to helping you reach your fitness goals with personalized guidance and support.
+            </p>
+          </ScrollAnimate>
         </div>
       </section>
 
@@ -76,72 +79,75 @@ const Trainers = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {trainers.map((trainer, index) => (
-              <div
+              <ScrollAnimate
                 key={trainer.id}
-                className="glass-card rounded-2xl overflow-hidden hover-lift group"
+                animation={index % 2 === 0 ? "fade-right" : "fade-left"}
+                delay={index * 0.15}
               >
-                <div className="grid grid-cols-1 lg:grid-cols-2">
-                  {/* Image */}
-                  <div className="relative h-64 lg:h-auto overflow-hidden">
-                    <img
-                      src={trainer.image}
-                      alt={trainer.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent lg:hidden" />
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-8">
-                    <h3 className="font-display text-3xl mb-1">{trainer.name}</h3>
-                    <p className="text-primary font-medium mb-4">{trainer.role}</p>
-                    <p className="text-muted-foreground text-sm mb-6">{trainer.bio}</p>
-
-                    {/* Certifications */}
-                    <div className="mb-6">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Award className="w-4 h-4 text-primary" />
-                        <span className="text-sm font-semibold">Certifications</span>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {trainer.certifications.map((cert) => (
-                          <span key={cert} className="px-2 py-1 bg-secondary text-xs rounded">
-                            {cert}
-                          </span>
-                        ))}
-                      </div>
+                <div className="glass-card rounded-2xl overflow-hidden hover-lift group h-full">
+                  <div className="grid grid-cols-1 lg:grid-cols-2">
+                    {/* Image */}
+                    <div className="relative h-64 lg:h-auto overflow-hidden">
+                      <img
+                        src={trainer.image}
+                        alt={trainer.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent lg:hidden" />
                     </div>
 
-                    {/* Specialties */}
-                    <div className="mb-6">
-                      <span className="text-sm font-semibold block mb-2">Specialties</span>
-                      <div className="flex flex-wrap gap-2">
-                        {trainer.specialties.map((specialty) => (
-                          <span key={specialty} className="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full">
-                            {specialty}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                    {/* Content */}
+                    <div className="p-8">
+                      <h3 className="font-display text-3xl mb-1">{trainer.name}</h3>
+                      <p className="text-primary font-medium mb-4">{trainer.role}</p>
+                      <p className="text-muted-foreground text-sm mb-6">{trainer.bio}</p>
 
-                    {/* Social Links */}
-                    <div className="flex gap-4">
-                      <a
-                        href={trainer.instagram}
-                        className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
-                      >
-                        <Instagram className="w-5 h-5" />
-                      </a>
-                      <a
-                        href={`mailto:${trainer.email}`}
-                        className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
-                      >
-                        <Mail className="w-5 h-5" />
-                      </a>
+                      {/* Certifications */}
+                      <div className="mb-6">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Award className="w-4 h-4 text-primary" />
+                          <span className="text-sm font-semibold">Certifications</span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {trainer.certifications.map((cert) => (
+                            <span key={cert} className="px-2 py-1 bg-secondary text-xs rounded">
+                              {cert}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Specialties */}
+                      <div className="mb-6">
+                        <span className="text-sm font-semibold block mb-2">Specialties</span>
+                        <div className="flex flex-wrap gap-2">
+                          {trainer.specialties.map((specialty) => (
+                            <span key={specialty} className="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full">
+                              {specialty}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Social Links */}
+                      <div className="flex gap-4">
+                        <a
+                          href={trainer.instagram}
+                          className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                        >
+                          <Instagram className="w-5 h-5" />
+                        </a>
+                        <a
+                          href={`mailto:${trainer.email}`}
+                          className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                        >
+                          <Mail className="w-5 h-5" />
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </ScrollAnimate>
             ))}
           </div>
         </div>
@@ -150,13 +156,15 @@ const Trainers = () => {
       {/* CTA */}
       <section className="py-24 bg-card">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="font-display text-5xl md:text-6xl mb-6">
-            TRAIN WITH THE <span className="text-gradient">BEST</span>
-          </h2>
-          <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
-            Book a free consultation with one of our trainers and start your personalized fitness journey.
-          </p>
-          <Button variant="hero">Book Free Consultation</Button>
+          <ScrollAnimate animation="scale">
+            <h2 className="font-display text-5xl md:text-6xl mb-6">
+              TRAIN WITH THE <span className="text-gradient">BEST</span>
+            </h2>
+            <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
+              Book a free consultation with one of our trainers and start your personalized fitness journey.
+            </p>
+            <Button variant="hero">Book Free Consultation</Button>
+          </ScrollAnimate>
         </div>
       </section>
 
