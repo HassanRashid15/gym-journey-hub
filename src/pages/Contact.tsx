@@ -4,8 +4,9 @@ import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ScrollAnimate } from "@/hooks/useScrollAnimation";
 
 const contactInfo = [
   {
@@ -64,12 +65,14 @@ const Contact = () => {
       {/* Hero */}
       <section className="pt-32 pb-16 bg-card">
         <div className="container mx-auto px-4">
-          <h1 className="font-display text-6xl md:text-8xl mb-4">
-            GET IN <span className="text-gradient">TOUCH</span>
-          </h1>
-          <p className="text-muted-foreground text-lg max-w-2xl">
-            Have questions about our memberships, classes, or facilities? We're here to help.
-          </p>
+          <ScrollAnimate animation="fade-up">
+            <h1 className="font-display text-6xl md:text-8xl mb-4">
+              GET IN <span className="text-gradient">TOUCH</span>
+            </h1>
+            <p className="text-muted-foreground text-lg max-w-2xl">
+              Have questions about our memberships, classes, or facilities? We're here to help.
+            </p>
+          </ScrollAnimate>
         </div>
       </section>
 
@@ -77,8 +80,13 @@ const Contact = () => {
       <section className="py-16 bg-card border-b border-border">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {contactInfo.map((item) => (
-              <div key={item.title} className="text-center lg:text-left">
+            {contactInfo.map((item, index) => (
+              <ScrollAnimate
+                key={item.title}
+                animation="fade-up"
+                delay={index * 0.1}
+                className="text-center lg:text-left"
+              >
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto lg:mx-0 mb-4">
                   <item.icon className="w-7 h-7 text-primary" />
                 </div>
@@ -86,7 +94,7 @@ const Contact = () => {
                 {item.details.map((detail, i) => (
                   <p key={i} className="text-muted-foreground text-sm">{detail}</p>
                 ))}
-              </div>
+              </ScrollAnimate>
             ))}
           </div>
         </div>
@@ -97,7 +105,7 @@ const Contact = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Form */}
-            <div>
+            <ScrollAnimate animation="fade-right">
               <h2 className="font-display text-4xl mb-6">SEND US A MESSAGE</h2>
               <p className="text-muted-foreground mb-8">
                 Fill out the form below and we'll get back to you within 24 hours.
@@ -181,10 +189,10 @@ const Contact = () => {
                   )}
                 </Button>
               </form>
-            </div>
+            </ScrollAnimate>
 
             {/* Map Placeholder */}
-            <div>
+            <ScrollAnimate animation="fade-left" delay={0.2}>
               <h2 className="font-display text-4xl mb-6">FIND US</h2>
               <div className="aspect-square lg:aspect-[4/3] rounded-2xl overflow-hidden bg-secondary relative">
                 <iframe
@@ -212,7 +220,7 @@ const Contact = () => {
                   </a>
                 </div>
               </div>
-            </div>
+            </ScrollAnimate>
           </div>
         </div>
       </section>
@@ -220,16 +228,18 @@ const Contact = () => {
       {/* CTA */}
       <section className="py-24 bg-card">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="font-display text-5xl md:text-6xl mb-6">
-            READY TO START?
-          </h2>
-          <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
-            Visit us today for a free tour and trial workout. No commitment required.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero">Schedule a Tour</Button>
-            <Button variant="heroOutline">Call Us Now</Button>
-          </div>
+          <ScrollAnimate animation="scale">
+            <h2 className="font-display text-5xl md:text-6xl mb-6">
+              READY TO START?
+            </h2>
+            <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
+              Visit us today for a free tour and trial workout. No commitment required.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button variant="hero">Schedule a Tour</Button>
+              <Button variant="heroOutline">Call Us Now</Button>
+            </div>
+          </ScrollAnimate>
         </div>
       </section>
 
