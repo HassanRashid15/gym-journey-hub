@@ -2,12 +2,13 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { ArrowRight, Zap, Users, Clock, Trophy, Star, ChevronRight } from "lucide-react";
+import { ArrowRight, Zap, Users, Clock, Trophy, Star, ChevronRight, ChevronDown } from "lucide-react";
 import heroImage from "@/assets/hero-gym.jpg";
 import classHiit from "@/assets/class-hiit.jpg";
 import classYoga from "@/assets/class-yoga.jpg";
 import classSpin from "@/assets/class-spin.jpg";
 import { useEffect, useState } from "react";
+import { ScrollAnimate } from "@/hooks/useScrollAnimation";
 
 const features = [
   {
@@ -139,36 +140,36 @@ const Index = () => {
         </div>
         
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float z-10">
-          <div className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center">
-            <div className="w-1.5 h-3 bg-primary rounded-full mt-2 animate-pulse" />
-          </div>
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-10">
+          <ChevronDown className="w-8 h-8 text-primary" />
         </div>
       </section>
 
       {/* Features Section */}
       <section className="py-24 bg-card">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <ScrollAnimate animation="fade-up" className="text-center mb-16">
             <h2 className="font-display text-5xl md:text-6xl mb-4">WHY CHOOSE FORGE</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               We provide everything you need to achieve your fitness goals in one place.
             </p>
-          </div>
+          </ScrollAnimate>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <div
+              <ScrollAnimate
                 key={feature.title}
-                className="glass-card rounded-xl p-8 hover-lift"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                animation="fade-up"
+                delay={index * 0.1}
               >
-                <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
-                  <feature.icon className="w-7 h-7 text-primary" />
+                <div className="glass-card rounded-xl p-8 hover-lift h-full">
+                  <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
+                    <feature.icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="font-display text-2xl mb-3">{feature.title}</h3>
+                  <p className="text-muted-foreground text-sm">{feature.description}</p>
                 </div>
-                <h3 className="font-display text-2xl mb-3">{feature.title}</h3>
-                <p className="text-muted-foreground text-sm">{feature.description}</p>
-              </div>
+              </ScrollAnimate>
             ))}
           </div>
         </div>
@@ -177,45 +178,50 @@ const Index = () => {
       {/* Classes Preview */}
       <section className="py-24">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
-            <div>
-              <h2 className="font-display text-5xl md:text-6xl mb-4">POPULAR CLASSES</h2>
-              <p className="text-muted-foreground text-lg max-w-xl">
-                Join our high-energy classes led by expert instructors.
-              </p>
+          <ScrollAnimate animation="fade-up">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+              <div>
+                <h2 className="font-display text-5xl md:text-6xl mb-4">POPULAR CLASSES</h2>
+                <p className="text-muted-foreground text-lg max-w-xl">
+                  Join our high-energy classes led by expert instructors.
+                </p>
+              </div>
+              <Button variant="outline" asChild className="mt-4 md:mt-0">
+                <Link to="/classes">
+                  View All Classes
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </Button>
             </div>
-            <Button variant="outline" asChild className="mt-4 md:mt-0">
-              <Link to="/classes">
-                View All Classes
-                <ChevronRight className="w-4 h-4" />
-              </Link>
-            </Button>
-          </div>
+          </ScrollAnimate>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {classes.map((classItem, index) => (
-              <div
+              <ScrollAnimate
                 key={classItem.name}
-                className="group relative rounded-xl overflow-hidden aspect-[4/5] hover-lift"
+                animation="scale"
+                delay={index * 0.15}
               >
-                <img
-                  src={classItem.image}
-                  alt={classItem.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <div className="flex gap-2 mb-3">
-                    <span className="px-3 py-1 bg-primary/20 text-primary text-xs font-semibold rounded-full">
-                      {classItem.duration}
-                    </span>
-                    <span className="px-3 py-1 bg-secondary text-secondary-foreground text-xs font-semibold rounded-full">
-                      {classItem.intensity}
-                    </span>
+                <div className="group relative rounded-xl overflow-hidden aspect-[4/5] hover-lift">
+                  <img
+                    src={classItem.image}
+                    alt={classItem.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <div className="flex gap-2 mb-3">
+                      <span className="px-3 py-1 bg-primary/20 text-primary text-xs font-semibold rounded-full">
+                        {classItem.duration}
+                      </span>
+                      <span className="px-3 py-1 bg-secondary text-secondary-foreground text-xs font-semibold rounded-full">
+                        {classItem.intensity}
+                      </span>
+                    </div>
+                    <h3 className="font-display text-3xl">{classItem.name}</h3>
                   </div>
-                  <h3 className="font-display text-3xl">{classItem.name}</h3>
                 </div>
-              </div>
+              </ScrollAnimate>
             ))}
           </div>
         </div>
@@ -225,22 +231,22 @@ const Index = () => {
       <section className="py-24 bg-card">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="font-display text-5xl md:text-7xl text-primary mb-2">10K+</div>
-              <p className="text-muted-foreground">Active Members</p>
-            </div>
-            <div className="text-center">
-              <div className="font-display text-5xl md:text-7xl text-primary mb-2">50+</div>
-              <p className="text-muted-foreground">Expert Trainers</p>
-            </div>
-            <div className="text-center">
-              <div className="font-display text-5xl md:text-7xl text-primary mb-2">100+</div>
-              <p className="text-muted-foreground">Weekly Classes</p>
-            </div>
-            <div className="text-center">
-              <div className="font-display text-5xl md:text-7xl text-primary mb-2">15</div>
-              <p className="text-muted-foreground">Years of Excellence</p>
-            </div>
+            {[
+              { value: "10K+", label: "Active Members" },
+              { value: "50+", label: "Expert Trainers" },
+              { value: "100+", label: "Weekly Classes" },
+              { value: "15", label: "Years of Excellence" },
+            ].map((stat, index) => (
+              <ScrollAnimate
+                key={stat.label}
+                animation="fade-up"
+                delay={index * 0.1}
+                className="text-center"
+              >
+                <div className="font-display text-5xl md:text-7xl text-primary mb-2">{stat.value}</div>
+                <p className="text-muted-foreground">{stat.label}</p>
+              </ScrollAnimate>
+            ))}
           </div>
         </div>
       </section>
@@ -248,30 +254,33 @@ const Index = () => {
       {/* Testimonials */}
       <section className="py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <ScrollAnimate animation="fade-up" className="text-center mb-16">
             <h2 className="font-display text-5xl md:text-6xl mb-4">MEMBER STORIES</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Real results from real people who chose to transform their lives at Forge.
             </p>
-          </div>
+          </ScrollAnimate>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div
+              <ScrollAnimate
                 key={testimonial.name}
-                className="glass-card rounded-xl p-8 hover-lift"
+                animation="fade-up"
+                delay={index * 0.15}
               >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-primary fill-primary" />
-                  ))}
+                <div className="glass-card rounded-xl p-8 hover-lift h-full">
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 text-primary fill-primary" />
+                    ))}
+                  </div>
+                  <p className="text-foreground mb-6 italic">"{testimonial.content}"</p>
+                  <div>
+                    <p className="font-semibold">{testimonial.name}</p>
+                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                  </div>
                 </div>
-                <p className="text-foreground mb-6 italic">"{testimonial.content}"</p>
-                <div>
-                  <p className="font-semibold">{testimonial.name}</p>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                </div>
-              </div>
+              </ScrollAnimate>
             ))}
           </div>
         </div>
@@ -284,7 +293,7 @@ const Index = () => {
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary rounded-full blur-3xl" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-3xl mx-auto">
+          <ScrollAnimate animation="scale" className="text-center max-w-3xl mx-auto">
             <h2 className="font-display text-5xl md:text-7xl mb-6">
               READY TO <span className="text-gradient">TRANSFORM</span>?
             </h2>
@@ -297,7 +306,7 @@ const Index = () => {
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </Button>
-          </div>
+          </ScrollAnimate>
         </div>
       </section>
 
