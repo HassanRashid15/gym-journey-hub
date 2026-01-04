@@ -3,6 +3,8 @@ import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Instagram, Mail, Award } from "lucide-react";
 import { ScrollAnimate } from "@/hooks/useScrollAnimation";
+import { usePageLoading } from "@/hooks/usePageLoading";
+import PageSkeleton from "@/components/skeletons/PageSkeleton";
 import trainer1 from "@/assets/trainer-1.jpg";
 import trainer2 from "@/assets/trainer-2.jpg";
 import trainer3 from "@/assets/trainer-3.jpg";
@@ -56,6 +58,12 @@ const trainers = [
 ];
 
 const Trainers = () => {
+  const isLoading = usePageLoading(500);
+
+  if (isLoading) {
+    return <PageSkeleton variant="trainers" />;
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />

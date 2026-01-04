@@ -7,6 +7,8 @@ import { Check, X, Sparkles } from "lucide-react";
 import BMICalculator from "@/components/fitness/BMICalculator";
 import FitnessAssessment from "@/components/fitness/FitnessAssessment";
 import { ScrollAnimate } from "@/hooks/useScrollAnimation";
+import { usePageLoading } from "@/hooks/usePageLoading";
+import PageSkeleton from "@/components/skeletons/PageSkeleton";
 
 const plans = [
   {
@@ -88,6 +90,11 @@ const faqs = [
 const Membership = () => {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("monthly");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const isLoading = usePageLoading(500);
+
+  if (isLoading) {
+    return <PageSkeleton variant="membership" />;
+  }
 
   return (
     <div className="min-h-screen bg-background">

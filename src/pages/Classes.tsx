@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Clock, Flame, Users, Calendar } from "lucide-react";
 import { allClasses, categories } from "@/data/classes";
 import { ScrollAnimate } from "@/hooks/useScrollAnimation";
+import { usePageLoading } from "@/hooks/usePageLoading";
+import PageSkeleton from "@/components/skeletons/PageSkeleton";
 
 const scheduleData = [
   { time: "6:00 AM", mon: "Power HIIT", tue: "Yoga Flow", wed: "Power HIIT", thu: "Yoga Flow", fri: "Power HIIT", sat: "Boot Camp" },
@@ -18,10 +20,15 @@ const scheduleData = [
 const Classes = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [view, setView] = useState<"classes" | "schedule">("classes");
+  const isLoading = usePageLoading(500);
 
   const filteredClasses = activeCategory === "All"
     ? allClasses
     : allClasses.filter((c) => c.category === activeCategory);
+
+  if (isLoading) {
+    return <PageSkeleton variant="classes" />;
+  }
 
   return (
     <div className="min-h-screen bg-background">
