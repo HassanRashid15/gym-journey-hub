@@ -4,6 +4,8 @@ import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Target, Heart, Users, Award, ArrowRight } from "lucide-react";
 import { ScrollAnimate } from "@/hooks/useScrollAnimation";
+import { usePageLoading } from "@/hooks/usePageLoading";
+import PageSkeleton from "@/components/skeletons/PageSkeleton";
 import heroImage from "@/assets/hero-gym.jpg";
 
 const values = [
@@ -38,6 +40,12 @@ const timeline = [
 ];
 
 const About = () => {
+  const isLoading = usePageLoading(500);
+
+  if (isLoading) {
+    return <PageSkeleton variant="about" />;
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />

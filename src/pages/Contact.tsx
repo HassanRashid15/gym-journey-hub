@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ScrollAnimate } from "@/hooks/useScrollAnimation";
+import { usePageLoading } from "@/hooks/usePageLoading";
+import PageSkeleton from "@/components/skeletons/PageSkeleton";
 
 const contactInfo = [
   {
@@ -41,6 +43,11 @@ const Contact = () => {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isLoading = usePageLoading(500);
+
+  if (isLoading) {
+    return <PageSkeleton variant="contact" />;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

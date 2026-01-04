@@ -9,7 +9,9 @@ import classYoga from "@/assets/class-yoga.jpg";
 import classSpin from "@/assets/class-spin.jpg";
 import { useEffect, useState } from "react";
 import { ScrollAnimate } from "@/hooks/useScrollAnimation";
-
+import { usePageLoading } from "@/hooks/usePageLoading";
+import HeroSkeleton from "@/components/skeletons/HeroSkeleton";
+import SectionSkeleton from "@/components/skeletons/SectionSkeleton";
 const features = [
   {
     icon: Zap,
@@ -77,6 +79,7 @@ const testimonials = [
 
 const Index = () => {
   const [scrollY, setScrollY] = useState(0);
+  const isLoading = usePageLoading(600);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,6 +88,20 @@ const Index = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <HeroSkeleton />
+        <SectionSkeleton variant="features" />
+        <SectionSkeleton variant="classes" />
+        <SectionSkeleton variant="stats" />
+        <SectionSkeleton variant="testimonials" />
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">

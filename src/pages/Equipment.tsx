@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { allEquipment, equipmentCategories } from "@/data/equipment";
 import { ChevronRight, Dumbbell } from "lucide-react";
 import { ScrollAnimate } from "@/hooks/useScrollAnimation";
+import { usePageLoading } from "@/hooks/usePageLoading";
+import PageSkeleton from "@/components/skeletons/PageSkeleton";
 import equipmentTreadmill from "@/assets/equipment-treadmill.jpg";
 import equipmentCable from "@/assets/equipment-cable.jpg";
 import equipmentBarbell from "@/assets/equipment-barbell.jpg";
@@ -25,10 +27,15 @@ const equipmentImages: Record<string, string> = {
 
 const Equipment = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const isLoading = usePageLoading(500);
 
   const filteredEquipment = activeCategory === "All"
     ? allEquipment
     : allEquipment.filter((e) => e.category === activeCategory);
+
+  if (isLoading) {
+    return <PageSkeleton variant="equipment" />;
+  }
 
   return (
     <div className="min-h-screen bg-background">
