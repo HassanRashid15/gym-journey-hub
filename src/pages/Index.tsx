@@ -12,6 +12,7 @@ import { ScrollAnimate } from "@/hooks/useScrollAnimation";
 import { usePageLoading } from "@/hooks/usePageLoading";
 import HeroSkeleton from "@/components/skeletons/HeroSkeleton";
 import SectionSkeleton from "@/components/skeletons/SectionSkeleton";
+import InteractiveBackground from "@/components/InteractiveBackground";
 const features = [
   {
     icon: Zap,
