@@ -13,6 +13,7 @@ import { usePageLoading } from "@/hooks/usePageLoading";
 import HeroSkeleton from "@/components/skeletons/HeroSkeleton";
 import SectionSkeleton from "@/components/skeletons/SectionSkeleton";
 import InteractiveBackground from "@/components/InteractiveBackground";
+import TypingText from "@/components/TypingText";
 const features = [
   {
     icon: Zap,
@@ -138,13 +139,21 @@ const Index = () => {
           style={{ transform: `translateY(${scrollY * 0.2}px)` }}
         >
           <div className="max-w-2xl">
+            <p className="text-sm md:text-base uppercase tracking-[0.3em] text-primary mb-4 animate-slide-up">
+              Unleash. Ignite. Dominate.
+            </p>
             <h1 className="font-display text-6xl md:text-8xl leading-none mb-6 animate-slide-up">
               FORGE YOUR
-              <span className="text-gradient block drop-shadow-[0_0_30px_hsl(24,100%,55%,0.5)]">FUTURE</span>
+              <span className="text-gradient block drop-shadow-[0_0_30px_hsl(0,95%,55%,0.5)] min-h-[1.1em]">
+                <TypingText
+                  phrases={["FUTURE", "STRENGTH", "LEGACY", "GREATNESS", "POWER"]}
+                />
+              </span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 animate-slide-up" style={{ animationDelay: "0.1s" }}>
-              Transform your body and mind with our world-class facilities, expert trainers, and a community that pushes you beyond your limits.
+              Sweat is your fuel. Every rep, every drop, every breath — this is where champions are built. Push past limits with elite coaches, cutting-edge gear, and a tribe that refuses to quit.
             </p>
+
             <div className="flex flex-col sm:flex-row gap-4 animate-slide-up" style={{ animationDelay: "0.2s" }}>
               <Button variant="hero" asChild>
                 <Link to="/membership">
