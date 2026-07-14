@@ -6,6 +6,7 @@ import { Target, Heart, Users, Award, ArrowRight } from "lucide-react";
 import { ScrollAnimate } from "@/hooks/useScrollAnimation";
 import { usePageLoading } from "@/hooks/usePageLoading";
 import PageSkeleton from "@/components/skeletons/PageSkeleton";
+import InteractiveBackground from "@/components/InteractiveBackground";
 import heroImage from "@/assets/hero-gym.jpg";
 
 const values = [
