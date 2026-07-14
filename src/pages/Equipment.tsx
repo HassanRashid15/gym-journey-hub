@@ -8,6 +8,7 @@ import { ChevronRight, Dumbbell } from "lucide-react";
 import { ScrollAnimate } from "@/hooks/useScrollAnimation";
 import { usePageLoading } from "@/hooks/usePageLoading";
 import PageSkeleton from "@/components/skeletons/PageSkeleton";
+import InteractiveBackground from "@/components/InteractiveBackground";
 import equipmentTreadmill from "@/assets/equipment-treadmill.jpg";
 import equipmentCable from "@/assets/equipment-cable.jpg";
 import equipmentBarbell from "@/assets/equipment-barbell.jpg";
