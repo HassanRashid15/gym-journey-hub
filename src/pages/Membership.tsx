@@ -106,6 +106,8 @@ const Membership = () => {
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary rounded-full blur-3xl" />
         </div>
+        <InteractiveBackground variant="gradient" />
+
         <div className="container mx-auto px-4 relative z-10">
           <ScrollAnimate animation="fade-up">
             <h1 className="font-display text-6xl md:text-8xl mb-4">
