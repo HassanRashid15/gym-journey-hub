@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ScrollAnimate } from "@/hooks/useScrollAnimation";
 import { usePageLoading } from "@/hooks/usePageLoading";
 import PageSkeleton from "@/components/skeletons/PageSkeleton";
+import InteractiveBackground from "@/components/InteractiveBackground";
 
 const contactInfo = [
   {
