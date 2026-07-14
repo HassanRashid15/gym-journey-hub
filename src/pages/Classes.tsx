@@ -8,6 +8,7 @@ import { allClasses, categories } from "@/data/classes";
 import { ScrollAnimate } from "@/hooks/useScrollAnimation";
 import { usePageLoading } from "@/hooks/usePageLoading";
 import PageSkeleton from "@/components/skeletons/PageSkeleton";
+import InteractiveBackground from "@/components/InteractiveBackground";
 
 const scheduleData = [
   { time: "6:00 AM", mon: "Power HIIT", tue: "Yoga Flow", wed: "Power HIIT", thu: "Yoga Flow", fri: "Power HIIT", sat: "Boot Camp" },
@@ -35,8 +36,10 @@ const Classes = () => {
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-card">
-        <div className="container mx-auto px-4">
+      <section className="relative overflow-hidden pt-32 pb-16 bg-card">
+        <InteractiveBackground variant="gradient" />
+        <div className="container mx-auto px-4 relative z-10">
+
           <ScrollAnimate animation="fade-up">
             <h1 className="font-display text-6xl md:text-8xl mb-4">
               OUR <span className="text-gradient">CLASSES</span>

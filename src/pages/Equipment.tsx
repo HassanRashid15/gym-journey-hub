@@ -8,6 +8,7 @@ import { ChevronRight, Dumbbell } from "lucide-react";
 import { ScrollAnimate } from "@/hooks/useScrollAnimation";
 import { usePageLoading } from "@/hooks/usePageLoading";
 import PageSkeleton from "@/components/skeletons/PageSkeleton";
+import InteractiveBackground from "@/components/InteractiveBackground";
 import equipmentTreadmill from "@/assets/equipment-treadmill.jpg";
 import equipmentCable from "@/assets/equipment-cable.jpg";
 import equipmentBarbell from "@/assets/equipment-barbell.jpg";
@@ -42,8 +43,10 @@ const Equipment = () => {
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-card">
-        <div className="container mx-auto px-4">
+      <section className="relative overflow-hidden pt-32 pb-16 bg-card">
+        <InteractiveBackground variant="gradient" />
+        <div className="container mx-auto px-4 relative z-10">
+
           <ScrollAnimate animation="fade-up">
             <h1 className="font-display text-6xl md:text-8xl mb-4">
               GYM <span className="text-gradient">EQUIPMENT</span>
