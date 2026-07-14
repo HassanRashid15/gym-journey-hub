@@ -127,6 +127,10 @@ const Index = () => {
           <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse" />
           <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-accent/20 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: "1s" }} />
         </div>
+
+        {/* Interactive particle background */}
+        <InteractiveBackground variant="particles" density={70} />
+
         
         <div 
           className="container mx-auto px-4 relative z-10 pt-20"
