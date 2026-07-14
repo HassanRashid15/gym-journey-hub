@@ -70,8 +70,10 @@ const Trainers = () => {
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-card">
-        <div className="container mx-auto px-4">
+      <section className="relative overflow-hidden pt-32 pb-16 bg-card">
+        <InteractiveBackground variant="gradient" />
+        <div className="container mx-auto px-4 relative z-10">
+
           <ScrollAnimate animation="fade-up">
             <h1 className="font-display text-6xl md:text-8xl mb-4">
               MEET OUR <span className="text-gradient">TRAINERS</span>
