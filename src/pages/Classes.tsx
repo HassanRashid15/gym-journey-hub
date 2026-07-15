@@ -100,7 +100,7 @@ const Classes = () => {
                   animation="fade-up"
                   delay={index * 0.1}
                 >
-                  <div className="glass-card rounded-xl overflow-hidden hover-lift group h-full">
+                  <div className="glass-card rounded-xl overflow-hidden hover-lift group h-full flex flex-col">
                     <div className="relative h-48 overflow-hidden">
                       <img
                         src={classItem.image}
@@ -113,7 +113,7 @@ const Classes = () => {
                         </span>
                       </div>
                     </div>
-                    <div className="p-6">
+                    <div className="p-6 flex flex-col flex-1">
                       <h3 className="font-display text-2xl mb-2">{classItem.name}</h3>
                       <p className="text-muted-foreground text-sm mb-4">{classItem.description}</p>
                       
@@ -144,7 +144,7 @@ const Classes = () => {
                         Instructor: <span className="text-foreground">{classItem.trainer}</span>
                       </p>
 
-                      <Button className="w-full" asChild>
+                      <Button className="w-full mt-auto" asChild>
                         <Link to={`/classes/${classItem.id}`}>Book Class</Link>
                       </Button>
                     </div>
