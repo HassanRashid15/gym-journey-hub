@@ -86,11 +86,8 @@ const Equipment = () => {
                 animation="fade-up"
                 delay={index * 0.1}
               >
-                <Link
-                  to={`/equipment/${equipment.id}`}
-                  className="glass-card rounded-xl overflow-hidden hover-lift group block h-full"
-                >
-                  <div className="relative h-56 overflow-hidden">
+                <div className="glass-card rounded-xl overflow-hidden hover-lift group h-full flex flex-col">
+                  <Link to={`/equipment/${equipment.id}`} className="block relative h-56 overflow-hidden">
                     <img
                       src={equipmentImages[equipment.id] || equipment.image}
                       alt={equipment.name}
@@ -106,8 +103,8 @@ const Equipment = () => {
                         {equipment.quantity} available
                       </span>
                     </div>
-                  </div>
-                  <div className="p-6">
+                  </Link>
+                  <div className="p-6 flex flex-col flex-1">
                     <h3 className="font-display text-2xl mb-2 group-hover:text-primary transition-colors">
                       {equipment.name}
                     </h3>
@@ -131,14 +128,14 @@ const Equipment = () => {
                       )}
                     </div>
 
-                    <div className="flex items-center justify-between">
-                      <span className="text-primary font-semibold text-sm flex items-center gap-1">
+                    <Button className="w-full mt-auto" asChild>
+                      <Link to={`/equipment/${equipment.id}`}>
                         View Details
-                        <ChevronRight className="w-4 h-4" />
-                      </span>
-                    </div>
+                        <ChevronRight className="w-4 h-4 ml-1" />
+                      </Link>
+                    </Button>
                   </div>
-                </Link>
+                </div>
               </ScrollAnimate>
             ))}
           </div>

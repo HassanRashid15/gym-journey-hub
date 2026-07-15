@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { getEquipmentById } from "@/data/equipment";
+import { getEquipmentById, allEquipment } from "@/data/equipment";
 import { ArrowLeft, Check, AlertCircle, Lightbulb, Target } from "lucide-react";
 import equipmentTreadmill from "@/assets/equipment-treadmill.jpg";
 import equipmentCable from "@/assets/equipment-cable.jpg";
@@ -162,9 +162,9 @@ const EquipmentDetail = () => {
             </div>
 
             {/* Sidebar */}
-            <div className="space-y-6">
+            <aside className="lg:sticky lg:top-24 self-start h-fit space-y-6">
               {/* Quick Info Card */}
-              <div className="glass-card rounded-xl p-6 sticky top-24">
+              <div className="glass-card rounded-xl p-6">
                 <h3 className="font-display text-2xl mb-4">QUICK INFO</h3>
 
                 <div className="space-y-4 mb-6">
@@ -206,8 +206,40 @@ const EquipmentDetail = () => {
                   </Button>
                 </div>
               </div>
-            </div>
+            </aside>
           </div>
+
+          {/* Related Equipment */}
+          {(() => {
+            const related = allEquipment.filter((e) => e.id !== equipment.id && e.category === equipment.category).slice(0, 3);
+            if (!related.length) return null;
+            return (
+              <div className="mt-24">
+                <h2 className="font-display text-4xl mb-8">
+                  RELATED <span className="text-gradient">EQUIPMENT</span>
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {related.map((re) => (
+                    <div key={re.id} className="glass-card rounded-xl overflow-hidden hover-lift group flex flex-col">
+                      <Link to={`/equipment/${re.id}`} className="block relative h-40 overflow-hidden">
+                        <img src={equipmentImages[re.id] || re.image} alt={re.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        <span className="absolute top-3 left-3 px-3 py-1 bg-primary text-primary-foreground text-xs font-bold rounded-full">
+                          {re.category}
+                        </span>
+                      </Link>
+                      <div className="p-5 flex flex-col flex-1">
+                        <h3 className="font-display text-xl mb-1">{re.name}</h3>
+                        <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{re.shortDescription}</p>
+                        <Button size="sm" className="w-full mt-auto" asChild>
+                          <Link to={`/equipment/${re.id}`}>View Details</Link>
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
         </div>
       </section>
 

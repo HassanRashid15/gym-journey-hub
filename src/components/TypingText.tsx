@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface TypingTextProps {
   phrases: string[];
@@ -10,54 +10,66 @@ interface TypingTextProps {
 }
 
 /**
- * Cycling typewriter effect with blinking caret. Accessible: exposes the
- * currently visible phrase to screen readers via aria-live and hides the
- * decorative caret from AT.
+ * Smooth cycling typewriter effect with steady blinking caret.
+ * Uses a ref-driven scheduler so timers aren't torn down on every keystroke,
+ * which eliminates the flicker/jitter from a state-driven setTimeout loop.
  */
 const TypingText = ({
   phrases,
   className = "",
-  typingSpeed = 70,
-  deletingSpeed = 40,
-  pauseMs = 1600,
+  typingSpeed = 65,
+  deletingSpeed = 35,
+  pauseMs = 1500,
   loop = true,
 }: TypingTextProps) => {
-  const [index, setIndex] = useState(0);
   const [text, setText] = useState("");
-  const [deleting, setDeleting] = useState(false);
+  const stateRef = useRef({ index: 0, deleting: false, text: "" });
 
   useEffect(() => {
     if (!phrases.length) return;
-    const current = phrases[index % phrases.length];
+    let timer: number;
+    let cancelled = false;
 
-    if (!deleting && text === current) {
-      if (!loop && index === phrases.length - 1) return;
-      const t = window.setTimeout(() => setDeleting(true), pauseMs);
-      return () => window.clearTimeout(t);
-    }
-    if (deleting && text === "") {
-      setDeleting(false);
-      setIndex((i) => (i + 1) % phrases.length);
-      return;
-    }
+    const tick = () => {
+      if (cancelled) return;
+      const s = stateRef.current;
+      const current = phrases[s.index % phrases.length];
 
-    const t = window.setTimeout(
-      () => {
-        setText((prev) =>
-          deleting ? prev.slice(0, -1) : current.slice(0, prev.length + 1)
-        );
-      },
-      deleting ? deletingSpeed : typingSpeed
-    );
-    return () => window.clearTimeout(t);
-  }, [text, deleting, index, phrases, typingSpeed, deletingSpeed, pauseMs, loop]);
+      if (!s.deleting && s.text === current) {
+        if (!loop && s.index === phrases.length - 1) return;
+        timer = window.setTimeout(() => {
+          s.deleting = true;
+          tick();
+        }, pauseMs);
+        return;
+      }
+      if (s.deleting && s.text === "") {
+        s.deleting = false;
+        s.index = (s.index + 1) % phrases.length;
+        timer = window.setTimeout(tick, 220);
+        return;
+      }
+
+      s.text = s.deleting
+        ? current.slice(0, s.text.length - 1)
+        : current.slice(0, s.text.length + 1);
+      setText(s.text);
+      timer = window.setTimeout(tick, s.deleting ? deletingSpeed : typingSpeed);
+    };
+
+    tick();
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [phrases, typingSpeed, deletingSpeed, pauseMs, loop]);
 
   return (
     <span className={className}>
       <span aria-live="polite">{text}</span>
       <span
         aria-hidden
-        className="ml-1 inline-block w-[0.08em] h-[0.9em] align-[-0.1em] bg-primary animate-pulse"
+        className="ml-1 inline-block w-[0.08em] h-[0.9em] align-[-0.1em] bg-primary animate-caret-blink"
       />
     </span>
   );

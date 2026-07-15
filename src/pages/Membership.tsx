@@ -157,7 +157,7 @@ const Membership = () => {
                 delay={index * 0.15}
               >
                 <div
-                  className={`glass-card rounded-2xl p-8 relative hover-lift h-full ${
+                  className={`glass-card rounded-2xl p-8 relative hover-lift h-full flex flex-col ${
                     plan.popular ? "border-2 border-primary ring-4 ring-primary/10" : ""
                   }`}
                 >
@@ -182,11 +182,11 @@ const Membership = () => {
 
                   <ul className="space-y-3 mb-8">
                     {plan.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center gap-3">
+                      <li key={featureIndex} className="flex items-start gap-3">
                         {feature.included ? (
-                          <Check className="w-5 h-5 text-primary" />
+                          <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                         ) : (
-                          <X className="w-5 h-5 text-muted-foreground/50" />
+                          <X className="w-5 h-5 text-muted-foreground/50 shrink-0 mt-0.5" />
                         )}
                         <span className={feature.included ? "" : "text-muted-foreground/50"}>
                           {feature.name}
@@ -196,7 +196,7 @@ const Membership = () => {
                   </ul>
 
                   <Button
-                    className="w-full"
+                    className="w-full mt-auto"
                     variant={plan.popular ? "default" : "outline"}
                   >
                     Get Started

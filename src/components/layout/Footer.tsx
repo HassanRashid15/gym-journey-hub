@@ -1,5 +1,12 @@
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { Dumbbell, Instagram, Facebook, Twitter, Youtube, MapPin, Phone, Mail } from "lucide-react";
+
+const footerLinks = [
+  { name: "Classes & Schedule", path: "/classes" },
+  { name: "Membership Plans", path: "/membership" },
+  { name: "Our Trainers", path: "/trainers" },
+  { name: "About Us", path: "/about" },
+];
 
 const Footer = () => {
   return (
@@ -16,16 +23,16 @@ const Footer = () => {
               Transform your body and mind at Forge. Premium fitness facilities, expert trainers, and a community that pushes you to be your best.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="#" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="#" aria-label="Facebook" className="text-muted-foreground hover:text-primary transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="#" aria-label="Twitter" className="text-muted-foreground hover:text-primary transition-colors">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="#" aria-label="YouTube" className="text-muted-foreground hover:text-primary transition-colors">
                 <Youtube className="w-5 h-5" />
               </a>
             </div>
@@ -35,26 +42,23 @@ const Footer = () => {
           <div>
             <h4 className="font-display text-xl mb-4">Quick Links</h4>
             <ul className="space-y-3">
-              <li>
-                <Link to="/classes" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                  Classes & Schedule
-                </Link>
-              </li>
-              <li>
-                <Link to="/membership" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                  Membership Plans
-                </Link>
-              </li>
-              <li>
-                <Link to="/trainers" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                  Our Trainers
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                  About Us
-                </Link>
-              </li>
+              {footerLinks.map((link) => (
+                <li key={link.path}>
+                  <NavLink
+                    to={link.path}
+                    end
+                    className={({ isActive }) =>
+                      `text-sm transition-colors ${
+                        isActive
+                          ? "text-primary font-semibold"
+                          : "text-muted-foreground hover:text-primary"
+                      }`
+                    }
+                  >
+                    {link.name}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </div>
 
