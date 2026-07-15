@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { getClassById } from "@/data/classes";
+import { getClassById, allClasses } from "@/data/classes";
 import { Clock, Flame, Users, Calendar, ArrowLeft, Check, Zap } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -10,6 +10,9 @@ const ClassDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { toast } = useToast();
   const gymClass = getClassById(id || "");
+  const relatedClasses = gymClass
+    ? allClasses.filter((c) => c.id !== gymClass.id && c.category === gymClass.category).slice(0, 3)
+    : [];
 
   if (!gymClass) {
     return (
@@ -145,9 +148,9 @@ const ClassDetail = () => {
             </div>
 
             {/* Sidebar */}
-            <div className="space-y-6">
+            <aside className="lg:sticky lg:top-24 self-start h-fit space-y-6">
               {/* Booking Card */}
-              <div className="glass-card rounded-xl p-6 sticky top-24">
+              <div className="glass-card rounded-xl p-6">
                 <h3 className="font-display text-2xl mb-4">BOOK THIS CLASS</h3>
 
                 {/* Availability */}
@@ -212,8 +215,36 @@ const ClassDetail = () => {
                   <Link to="/trainers">View Profile</Link>
                 </Button>
               </div>
-            </div>
+            </aside>
           </div>
+
+          {/* Related Classes */}
+          {relatedClasses.length > 0 && (
+            <div className="mt-24">
+              <h2 className="font-display text-4xl mb-8">
+                YOU MAY ALSO <span className="text-gradient">LIKE</span>
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {relatedClasses.map((rc) => (
+                  <div key={rc.id} className="glass-card rounded-xl overflow-hidden hover-lift group flex flex-col">
+                    <Link to={`/classes/${rc.id}`} className="block relative h-40 overflow-hidden">
+                      <img src={rc.image} alt={rc.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                      <span className="absolute top-3 left-3 px-3 py-1 bg-primary text-primary-foreground text-xs font-bold rounded-full">
+                        {rc.category}
+                      </span>
+                    </Link>
+                    <div className="p-5 flex flex-col flex-1">
+                      <h3 className="font-display text-xl mb-1">{rc.name}</h3>
+                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{rc.description}</p>
+                      <Button size="sm" className="w-full mt-auto" asChild>
+                        <Link to={`/classes/${rc.id}`}>View Class</Link>
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
