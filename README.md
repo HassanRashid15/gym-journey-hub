@@ -60,6 +60,35 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Authentication
+
+This application includes a demo authentication system with two user roles:
+
+### Demo Credentials
+
+**Admin Account:**
+- Email: `admin@gym.com`
+- Password: `admin123`
+- Role: Admin (full access to all features)
+
+**Customer Account:**
+- Email: `customer@gym.com`
+- Password: `customer123`
+- Role: Customer (standard user access)
+
+### Features
+
+- Login page at `/login`
+- Registration page at `/register`
+- Role-based access control
+- Session persistence using localStorage
+- Demo credential buttons on login page for quick testing
+
+### User Roles
+
+- **Admin**: Full administrative access to manage gym resources, users, and settings
+- **Customer**: Standard user access to view classes, equipment, trainers, and manage membership
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.

@@ -1,5 +1,6 @@
 import { NavLink, Link } from "react-router-dom";
 import { Dumbbell, Instagram, Facebook, Twitter, Youtube, MapPin, Phone, Mail } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const footerLinks = [
   { name: "Classes & Schedule", path: "/classes" },
@@ -9,6 +10,8 @@ const footerLinks = [
 ];
 
 const Footer = () => {
+  const { theme } = useTheme();
+
   return (
     <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 py-16">
@@ -16,8 +19,14 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <Dumbbell className="w-8 h-8 text-primary" />
-              <span className="font-display text-2xl tracking-wider">FORGE</span>
+              
+              <img 
+                src={theme === "light" ? "/navlogolight.png" : "/gym.png"} 
+                alt="FORGE Gym" 
+                className="w-32 h-12 object-contain"
+              />
+              
+              {/* <span className="font-display text-2xl tracking-wider">FORGE</span> */}
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
               Transform your body and mind at Forge. Premium fitness facilities, expert trainers, and a community that pushes you to be your best.

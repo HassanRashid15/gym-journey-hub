@@ -1,8 +1,19 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Dumbbell } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Menu, X, Dumbbell, LogOut, User, Settings, LayoutDashboard } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -18,6 +29,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { user, logout, isAuthenticated } = useAuth();
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,15 +49,18 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className={`flex items-center justify-between transition-all duration-300 ${scrolled ? "h-16" : "h-20"}`}>
+        <div className={`flex items-center justify-between transition-all duration-300 ${scrolled ? "h-16" : "h-20"} relative`}>
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <Dumbbell className={`text-primary transition-all duration-300 group-hover:rotate-12 ${scrolled ? "w-7 h-7" : "w-8 h-8"}`} />
-            <span className={`font-display tracking-wider transition-all duration-300 ${scrolled ? "text-xl" : "text-2xl"}`}>FORGE</span>
+            <img 
+              src={theme === "light" ? "/navlogolight.png" : "/gym.png"} 
+              alt="FORGE Gym" 
+              className={`object-contain transition-all duration-300 ${scrolled ? "w-32 h-12" : "w-32 h-12"}`}
+            />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-6">
+          <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-6">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -61,9 +77,60 @@ const Navbar = () => {
           {/* CTA Button & Theme Toggle */}
           <div className="hidden lg:flex items-center gap-2">
             <ThemeToggle />
-            <Button variant="default" size={scrolled ? "default" : "lg"} asChild className="transition-all duration-300">
-              <Link to="/membership">Join Now</Link>
-            </Button>
+            {isAuthenticated ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                    <Avatar className="h-9 w-9">
+                      <AvatarImage src={user?.avatar} alt={user?.name} />
+                      <AvatarFallback>{user?.name?.charAt(0).toUpperCase()}</AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">{user?.name}</p>
+                      <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
+                      <p className="text-xs leading-none text-muted-foreground capitalize">{user?.role}</p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to="/dashboard" className="cursor-pointer">
+                      <LayoutDashboard className="mr-2 h-4 w-4" />
+                      Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/profile" className="cursor-pointer">
+                      <User className="mr-2 h-4 w-4" />
+                      Profile
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/settings" className="cursor-pointer">
+                      <Settings className="mr-2 h-4 w-4" />
+                      Settings
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={logout} className="cursor-pointer text-destructive">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Log out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Button variant="ghost" size={scrolled ? "default" : "lg"} asChild className="transition-all duration-300">
+                  <Link to="/login">Sign In</Link>
+                </Button>
+                <Button variant="default" size={scrolled ? "default" : "lg"} asChild className="transition-all duration-300">
+                  <Link to="/register">Join Now</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button & Theme Toggle */}
@@ -97,9 +164,51 @@ const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
-              <Button variant="default" className="mt-4" asChild>
-                <Link to="/membership">Join Now</Link>
-              </Button>
+              {isAuthenticated ? (
+                <>
+                  <div className="flex items-center gap-3 py-2 border-t border-border mt-4 pt-4">
+                    <Avatar className="h-10 w-10">
+                      <AvatarImage src={user?.avatar} alt={user?.name} />
+                      <AvatarFallback>{user?.name?.charAt(0).toUpperCase()}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col">
+                      <p className="text-sm font-medium">{user?.name}</p>
+                      <p className="text-xs text-muted-foreground capitalize">{user?.role}</p>
+                    </div>
+                  </div>
+                  <Button variant="ghost" className="justify-start" asChild onClick={() => setIsOpen(false)}>
+                    <Link to="/dashboard">
+                      <LayoutDashboard className="mr-2 h-4 w-4" />
+                      Dashboard
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" className="justify-start" asChild onClick={() => setIsOpen(false)}>
+                    <Link to="/profile">
+                      <User className="mr-2 h-4 w-4" />
+                      Profile
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" className="justify-start" asChild onClick={() => setIsOpen(false)}>
+                    <Link to="/settings">
+                      <Settings className="mr-2 h-4 w-4" />
+                      Settings
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" className="justify-start text-destructive" onClick={() => { logout(); setIsOpen(false); }}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Log out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="ghost" className="mt-4" asChild>
+                    <Link to="/login" onClick={() => setIsOpen(false)}>Sign In</Link>
+                  </Button>
+                  <Button variant="default" className="mt-2" asChild>
+                    <Link to="/register" onClick={() => setIsOpen(false)}>Join Now</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         )}
